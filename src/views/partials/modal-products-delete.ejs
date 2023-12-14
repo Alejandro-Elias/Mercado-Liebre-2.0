@@ -1,0 +1,25 @@
+<div class="modal fade" id="warningModal2<%= id %>" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+      <div class="modal-body">
+        <div class="d-flex my-3">
+        </div>
+        <h4>Desea eliminar el producto <%= name %>?</h4>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form action="/products/eliminar/<%= id %>?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-sm btn-outline-danger">
+            Si, eliminalo
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
