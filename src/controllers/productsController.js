@@ -68,17 +68,17 @@ const controller = {
 	update: (req, res) => {
 		// Do the magic
 
-		const {name,price,discount, description, category} = req.body
+		const { name, price, discount, description, category } = req.body
 
 		const productoEditado = products.map(product => {
 			if (product.id === +req.params.id) {
-			
-					product.name = name.trim(),
+
+				product.name = name.trim(),
 					product.price = +price,
 					product.discount = discount,
 					product.category = category,
 					product.description = description.trim()
-			
+
 			}
 			return product
 		})
@@ -93,13 +93,13 @@ const controller = {
 	destroy: (req, res) => {
 		// Do the magic
 
-		const {id} = req.params;
+		const { id } = req.params;
 
-		const productoFiltrado = products.filter(producto => producto.id != id )
+		const productoFiltrado = products.filter(producto => producto.id != id)
 
 		fs.writeFileSync(productsFilePath, JSON.stringify(productoFiltrado), "utf-8")
 
-		return res.redirect('/')
+		return res.redirect('/products')
 	}
 };
 

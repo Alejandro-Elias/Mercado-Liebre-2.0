@@ -32,16 +32,16 @@
 
                 <% if (product.discount) { %>
                   <p class="product-detail-price small">
-                    <span>$<%= product.price %></span>
+                    <span>$<%= toThousand(product.price) %></span>
                     /
                     <b>Product.discount</b>
                   </p>
                   <p class="product-detail-price">
-                    <%= toThousand((product.price - (product.price * product.discount)/100)) %>
+                    <%= toThousand((product.price - (product.price * product.discount)/100).toFixed([0])) %>
                   </p>
                   <% } else { %>
                     <p class="product-detail-price">
-                      <%= product.price %>
+                      <%= toThousand(product.price) %>
                     </p>
 
                     <% } %>
