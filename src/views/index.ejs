@@ -43,7 +43,7 @@
 					<% products.forEach( product => { %>
 
 						<% if (product.category === "in-sale") { %>
-						 <%- include('./partials/product-card', {product}) %>
+						 <%- include('./partials/product-card', {product, toThousand}) %>
 						<% } %>					
 
 						<% }) %>

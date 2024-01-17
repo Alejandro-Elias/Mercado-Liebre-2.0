@@ -1,10 +1,8 @@
-const { name } = require('ejs');
 const fs = require('fs');
 const path = require('path');
 const { existsSync, unlinkSync } = require('fs');
 
 const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
-const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
@@ -13,12 +11,18 @@ const controller = {
 	index: (req, res) => {
 		// Do the magic
 
+
+		const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
 		return res.render('products', { products, toThousand })
 	},
 
 	// Detail - Detail from one product
 	detail: (req, res) => {
 		// Do the magic
+
+
+		const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
 		const product = products.find(element => element.id === +req.params.id)
 
@@ -35,18 +39,22 @@ const controller = {
 	store: (req, res) => {
 		// Do the magic
 
+
+		const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
+
 		const { name, discount, price, description, category } = (req.body)
 
 		const lastID = products[products.length - 1].id
 
 		const nuevoProducto = {
-			id: products.length + 1,
+			id: lastID + 1,
 			name: name.trim(),
 			price: +price,
-			discount: +discount,
+			discount: discount ? +discount : 0,
 			category: category,
 			description: description.trim(),
-			image: "default-image.png"
+			image: req.file ? req.file.filename : "default-image.png"
 		}
 
 		products.push(nuevoProducto)
@@ -59,6 +67,9 @@ const controller = {
 	// Update - Form to edit
 	edit: (req, res) => {
 		// Do the magic
+
+
+		const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
 		const product = products.find(element => element.id === +req.params.id)
 
@@ -73,12 +84,12 @@ const controller = {
 
 		const productoEditado = products.map(product => {
 
-			const imagen = req.file.fieldname
+			const imagen = req.file.fieldname;
 
 			console.log(req.file);
 
 			if (product.id == req.params.id) {
-				
+
 				(imagen && existsSync('public/images/products/' + product.image)) && unlinkSync('public/images/products/' + product.image)
 
 				product.name = name.trim(),
@@ -86,7 +97,7 @@ const controller = {
 					product.discount = discount,
 					product.category = category,
 					product.description = description.trim(),
-					product.image =  req.file ? req.file.filename : product.image 
+					product.image = req.file ? req.file.filename : product.image
 
 			}
 			return product
@@ -102,7 +113,14 @@ const controller = {
 	destroy: (req, res) => {
 		// Do the magic
 
+
+		const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
 		const { id } = req.params;
+
+		const { image } = products.find(product => product.id == id);
+
+		existsSync('public/images/products/' + image) && unlinkSync('public/images/products/' + image)
 
 		const productoFiltrado = products.filter(producto => producto.id != id)
 
