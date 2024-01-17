@@ -1,6 +1,7 @@
 const { name } = require('ejs');
 const fs = require('fs');
 const path = require('path');
+const { existsSync, unlinkSync } = require('fs');
 
 const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
 const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
@@ -71,13 +72,21 @@ const controller = {
 		const { name, price, discount, description, category } = req.body
 
 		const productoEditado = products.map(product => {
-			if (product.id === +req.params.id) {
+
+			const imagen = req.file.fieldname
+
+			console.log(req.file);
+
+			if (product.id == req.params.id) {
+				
+				(imagen && existsSync('public/images/products/' + product.image)) && unlinkSync('public/images/products/' + product.image)
 
 				product.name = name.trim(),
 					product.price = +price,
 					product.discount = discount,
 					product.category = category,
-					product.description = description.trim()
+					product.description = description.trim(),
+					product.image =  req.file ? req.file.filename : product.image 
 
 			}
 			return product

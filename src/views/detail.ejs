@@ -34,7 +34,7 @@
                   <p class="product-detail-price small">
                     <span>$<%= toThousand(product.price) %></span>
                     /
-                    <b>Product.discount</b>
+                    <b>Descuento <%= product.discount %>%</b>
                   </p>
                   <p class="product-detail-price">
                     <%= toThousand((product.price - (product.price * product.discount)/100).toFixed([0])) %>

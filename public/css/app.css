@@ -360,6 +360,7 @@ hr {
   border-radius: 8px;
   border: none;
   margin-bottom: 15px;
+  height: 50px;
 }
 
 .action-button {
@@ -410,6 +411,22 @@ textarea.form-input {
   min-height: 140px;
   resize: vertical;
   padding: 15px;
+}
+.edit__form__button {
+  width: 180px;
+    height: 35px;
+    padding: 8px;
+    background-color: var(--ColorAzul);
+    border-radius: 20px;
+    color: whitesmoke;
+    font-weight: bold;
+    border-color: var(--ColorAzul);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 16px;
+    width: 200px;
 }
 
 
